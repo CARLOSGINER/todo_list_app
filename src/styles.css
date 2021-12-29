@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap");
+
+body {
+  background-color: whitesmoke;
+}
+
+.App {
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.App h2 {
+  color: #656565;
+}
+
+.todoList {
+  margin-top: 1em;
+}
+
+.todo {
+  width: 20em;
+  background-color: #fff;
+  text-align: left;
+  padding-left: 1em;
+  border: 1px solid whitesmoke;
+}
+
+.todo p {
+  display: inline-block;
+  padding-right: 1em;
+  font-family: Roboto;
+}
+
+.check_close {
+  float: right;
+  margin-right: 1em;
+  color: darkgray;
+  margin-top: 1em;
+}
+
+.todo span {
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+
+.check:hover {
+  color: greenyellow;
+}
+
+.close:hover {
+  color: tomato;
+}
+
+.completed {
+  color: gray;
+  text-decoration: line-through;
+}
+
+.btn {
+  border: none;
+  margin-left: -2em;
+  /* background-color: cadetblue; */
+  background-color: #96d1c5;
+  height: 2.3em;
+  padding: 0 1em 0 1em;
+  border-radius: 1em;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.5s ease;
+}
+
+.btn:hover {
+  background-color: rgb(171, 240, 226);
+}
+
+.todoInput {
+  height: 2em;
+  width: 23em;
+  padding-left: 2em;
+  border-radius: 0.5em;
+  border: none;
+  outline-color: #96d1c5;
+  outline-width: medium;
+  transition: all 2s ease;
+}
+
+.todoInput:focus {
+  outline-width: thick;
+}
