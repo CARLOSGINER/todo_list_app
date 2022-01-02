@@ -4,6 +4,7 @@ import "./styles.css";
 
 const App = () => {
   const [text, setText] = useState("");
+  const [todoListTitle, setTodoListTitle] = useState("My Todo List")
   //* nota 1
   const count = useRef(0);
   const inputRef = useRef();
@@ -12,14 +13,19 @@ const App = () => {
     inputRef.current.focus();
   }, []);
 
-  const initialState = [
+  const initialState = 
     {
-      id: count.current,
-      text: "first, add new tasks!",
-      completed: false
+    title:todoListTitle,
+    items:[
+      {
+        id: count.current,
+        text: "first, add new tasks!",
+        completed: false
+      }   
+    ]
     }
-  ];
-  const [todoList, dispatch] = useReducer(todoReducer, initialState);
+  ;
+  const [upTodoList, dispatch] = useReducer(todoReducer, initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,6 +33,7 @@ const App = () => {
     dispatch({
       type: "ADD_TODO",
       payload: {
+        title:todoListTitle,
         id: count.current,
         text: text
       }
@@ -38,6 +45,8 @@ const App = () => {
     dispatch({
       type: "COMPLETE_TODO",
       payload: {
+        title:todoListTitle,
+        todoListTitle,
         id: clickedId
       }
     });
@@ -48,14 +57,33 @@ const App = () => {
     dispatch({
       type: "REMOVE_TODO",
       payload: {
+        title:todoListTitle,
         id: clickedId
       }
     });
   };
 
+  const titleChange= (e) => {
+    setTodoListTitle(e.target.value)  
+  }
+
+  //ejecuta el dispatch despues de que todoListTitle ya cambió y esté disponible
+  useEffect(()=>{
+    dispatch({
+      type:"CHANGE_TITLE",
+      payload:{
+        title:todoListTitle
+      }
+    })
+  },[todoListTitle])
+
   return (
     <div className="App">
-      <h2>My Todo List</h2>
+      <input 
+        className="todoListTitle" 
+        value={todoListTitle}
+        onChange={(e)=>titleChange(e)}
+      />
       <form onSubmit={handleSubmit}>
         <input
           ref={inputRef}
@@ -68,7 +96,8 @@ const App = () => {
         </button>
       </form>
       <div className="todoList">
-        {todoList.map((todo) => (
+        {console.log('uptodoList',upTodoList)}
+        {upTodoList.items.map((todo) => (
           <div key={todo.id} className="todo">
             <p className={todo.completed ? "completed" : undefined}>
               {todo.text}

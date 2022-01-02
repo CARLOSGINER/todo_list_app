@@ -83,9 +83,22 @@ body {
   border: none;
   outline-color: #96d1c5;
   outline-width: medium;
-  transition: all 2s ease;
 }
-
+ 
 .todoInput:focus {
   outline-width: thick;
+} 
+
+.todoListTitle{
+  background-color: whitesmoke;
+  border: none;
+  font-family: monospace;
+  font-size: 1.2rem;
+  color: #656565;
+  margin-bottom:1em;
+  text-align: center;
+}
+
+.todoListTitle:focus{
+  outline:none;
 }
