@@ -1,26 +1,33 @@
-import { useReducer, useState } from "react";
+import { useRef, useEffect, useReducer, useState } from "react";
 import todoReducer from "./todoReducer";
 import "./styles.css";
 
 const App = () => {
   const [text, setText] = useState("");
-  const [lastId, setLastId] = useState(0);
+  //* nota 1
+  const count = useRef(0);
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
+
   const initialState = [
     {
-      id: lastId,
+      id: count.current,
       text: "first, add new tasks!",
       completed: false
     }
   ];
-  const [state, dispatch] = useReducer(todoReducer, initialState);
+  const [todoList, dispatch] = useReducer(todoReducer, initialState);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setLastId((prev) => prev + 1);
+    count.current++;
     dispatch({
       type: "ADD_TODO",
       payload: {
-        id: lastId,
+        id: count.current,
         text: text
       }
     });
@@ -37,6 +44,7 @@ const App = () => {
   };
 
   const removeTodo = (clickedId) => {
+    count.current--;
     dispatch({
       type: "REMOVE_TODO",
       payload: {
@@ -50,6 +58,7 @@ const App = () => {
       <h2>My Todo List</h2>
       <form onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           className="todoInput"
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -59,9 +68,11 @@ const App = () => {
         </button>
       </form>
       <div className="todoList">
-        {state.map((todo) => (
+        {todoList.map((todo) => (
           <div key={todo.id} className="todo">
-            <p className={todo.completed && "completed"}>{todo.text}</p>
+            <p className={todo.completed ? "completed" : undefined}>
+              {todo.text}
+            </p>
             <div className="check_close">
               <span className="check" onClick={() => completeTodo(todo.id)}>
                 ✔
@@ -78,3 +89,12 @@ const App = () => {
 };
 
 export default App;
+
+
+//NOTA 1:
+// Es mejor usar useRef en vez de useState, porque nos interesa sumar 1 al ultimo ID, y necesitamos ese valor inmediatamente
+// para el Dispatch. Usando "useState" el valor estaría disponible asincronamente, por lo que siempre estaría desfasado
+// por uno atrás. Además da el error de Key repetida, pues el primer renderizado el id es cero, al igual que el valor
+// inicial.  Es en estos casos es util el useRef que es "persistente", es decir no cambia entre renderizados.
+// (cosa que pasaria definiendo una variable normalmente con <let count= 0>, volviendose a iniciar cada vez)
+// y  la segunda característica, que no manda a re-renderizar el componente.   Mas info: https://dmitripavlutin.com/react-useref-guide/
