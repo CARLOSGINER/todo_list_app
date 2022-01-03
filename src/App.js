@@ -96,7 +96,6 @@ const App = () => {
         </button>
       </form>
       <div className="todoList">
-        {console.log('uptodoList',upTodoList)}
         {upTodoList.items.map((todo) => (
           <div key={todo.id} className="todo">
             <p className={todo.completed ? "completed" : undefined}>

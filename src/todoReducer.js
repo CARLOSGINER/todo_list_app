@@ -27,7 +27,6 @@ const todoReducer = (todoList, action) => {
 
     case "REMOVE_TODO": {
       const filteredTodoList = todoList.items.filter((todo) => action.payload.id !== todo.id); 
-      console.log(filteredTodoList)
       return  {
         title:action.payload.title,
         items:filteredTodoList 
