@@ -1,4 +1,4 @@
-const todoReducer = (todoList, action) => {
+export const todoReducer = (todoList, action) => {
   switch (action.type) {
 
     case "CHANGE_TITLE": {
