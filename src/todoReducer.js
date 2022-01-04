@@ -4,7 +4,7 @@ export const todoReducer = ({items}, {type,payload:{id,title,text}}) => {
 
     case "CHANGE_TITLE": {
       return {
-        title:title,
+        title,
         items:[
           ...items 
         ]
@@ -13,12 +13,12 @@ export const todoReducer = ({items}, {type,payload:{id,title,text}}) => {
 
     case "ADD_TODO": {
       const newTodo = {
-        id: id,
-        text: text,
+        id,
+        text,
         completed: false
       };
       return {
-        title:title,
+        title,
         items:[
           ...items,
           newTodo 
@@ -29,7 +29,7 @@ export const todoReducer = ({items}, {type,payload:{id,title,text}}) => {
     case "REMOVE_TODO": {
       const filteredTodoList = items.filter((todo) => id !== todo.id); 
       return  {
-        title:title,
+        title,
         items:filteredTodoList 
       };
     }
@@ -48,13 +48,13 @@ export const todoReducer = ({items}, {type,payload:{id,title,text}}) => {
         }
       });
       return {
-        title:title,
+        title,
         items:updatedTodoList
       };
     }
     default:
       return {
-        title:title,
+        title,
         items:[
           ...items 
         ]
