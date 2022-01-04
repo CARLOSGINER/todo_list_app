@@ -7,6 +7,7 @@ export function GlobalProvider({ children }) {
     
   const [todoListTitle, setTodoListTitle] = useState("My Todo List");
   const [text, setText] = useState("");
+  const [errorFlag,setErrorFlag] = useState(false)
   const count = useRef(0); //*1
   const inputRef = useRef();
   const initialState = {
@@ -41,6 +42,10 @@ export function GlobalProvider({ children }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (text===""){
+        setErrorFlag(true);
+        return 
+    }
     count.current++;
     dispatch({
       type: "ADD_TODO",
@@ -51,6 +56,7 @@ export function GlobalProvider({ children }) {
       },
     });
     setText("");
+    setErrorFlag(false);
   };
 
   const completeTodo = (clickedId) => {
@@ -85,7 +91,8 @@ export function GlobalProvider({ children }) {
         handleSubmit,
         completeTodo,
         removeTodo,
-        count
+        count,
+        errorFlag
       }}
     >
       {children}

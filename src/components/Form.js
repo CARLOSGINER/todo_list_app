@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
 export default function Form() {
-  const { todoListTitle,titleChange,text,setText,handleSubmit,inputRef } = useContext(GlobalContext);
+  const { todoListTitle,titleChange,text,setText,handleSubmit,inputRef,errorFlag } = useContext(GlobalContext);
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function Form() {
       <form onSubmit={handleSubmit}>
         <input
           ref={inputRef}
-          className="todoInput"
+          className={errorFlag?"todoInput inputError" :"todoInput"}
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
