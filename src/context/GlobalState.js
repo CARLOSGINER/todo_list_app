@@ -58,14 +58,12 @@ export function GlobalProvider({ children }) {
       type: "COMPLETE_TODO",
       payload: {
         title: todoListTitle,
-        todoListTitle,
         id: clickedId,
       },
     });
   };
 
   const removeTodo = (clickedId) => {
-    count.current--;
     dispatch({
       type: "REMOVE_TODO",
       payload: {
@@ -87,6 +85,7 @@ export function GlobalProvider({ children }) {
         handleSubmit,
         completeTodo,
         removeTodo,
+        count
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
 export default function List() {
-  const { upTodoList, completeTodo,removeTodo } = useContext(GlobalContext);
+  const { upTodoList, completeTodo, removeTodo, count } = useContext(GlobalContext);
 
   return (
     <>

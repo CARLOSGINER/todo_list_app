@@ -1,41 +1,42 @@
-export const todoReducer = (todoList, action) => {
-  switch (action.type) {
+//argumento no destructurado sería: const todoReducer = {currentState,action} => {
+export const todoReducer = ({items}, {type,payload:{id,title,text}}) => {
+  switch (type) {
 
     case "CHANGE_TITLE": {
       return {
-        title:action.payload.title,
+        title:title,
         items:[
-          ...todoList.items 
+          ...items 
         ]
       };
     }
 
     case "ADD_TODO": {
       const newTodo = {
-        id: action.payload.id,
-        text: action.payload.text,
+        id: id,
+        text: text,
         completed: false
       };
       return {
-        title:action.payload.title,
+        title:title,
         items:[
-          ...todoList.items,
+          ...items,
           newTodo 
         ]
       };
     }
 
     case "REMOVE_TODO": {
-      const filteredTodoList = todoList.items.filter((todo) => action.payload.id !== todo.id); 
+      const filteredTodoList = items.filter((todo) => id !== todo.id); 
       return  {
-        title:action.payload.title,
+        title:title,
         items:filteredTodoList 
       };
     }
 
     case "COMPLETE_TODO": {
-      const updatedTodoList = todoList.items.map((todo) => {
-        if (action.payload.id === todo.id) {
+      const updatedTodoList = items.map((todo) => {
+        if (id === todo.id) {
 
           return {
             ...todo,
@@ -47,12 +48,17 @@ export const todoReducer = (todoList, action) => {
         }
       });
       return {
-        title:action.payload.title,
+        title:title,
         items:updatedTodoList
       };
     }
     default:
-      return todoList;
+      return {
+        title:title,
+        items:[
+          ...items 
+        ]
+      };
   }
 };
 
